@@ -7,6 +7,7 @@ import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 
 import Home from './pages/Home';
+import ViewSingle from './pages/ViewSingle';
 
 import './App.css';
 
@@ -70,6 +71,9 @@ function App() {
             <Switch>
               <Route path="/" exact>
                 <Home />
+              </Route>
+              <Route path="/pokemon/:id" exact>
+                <ViewSingle />
               </Route>
             </Switch>
           </BrowserRouter>
