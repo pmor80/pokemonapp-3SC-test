@@ -87,6 +87,25 @@ const ViewSingle = () => {
         <img src={post.sprites.front_default} alt="" />
       </div>
 
+      <table className="stats">
+        <thead>
+          <tr>
+            <td></td>
+            <td>Base Stat</td>
+            <td>Efford</td>
+          </tr>
+        </thead>
+        <tbody>
+          {post.stats.map(item => (
+            <tr key={item.stat.name}>
+              <td>{item.stat.name}</td>
+              <td>{item.base_stat}</td>
+              <td>{item.effort}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
       <div className="pagination">
         <Button
           onButtonClickHandler={addToFavouritesHandler}
