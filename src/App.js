@@ -85,7 +85,7 @@ function App() {
     return () => {
       ourRequest.cancel();
     };
-  }, []);
+  }, [dispatch, state.url]);
 
   useEffect(() => {
     localStorage.removeItem('favoritePokemons');

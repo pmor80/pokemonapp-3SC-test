@@ -42,7 +42,7 @@ const ViewSingle = () => {
     return () => {
       ourRequest.cancel();
     };
-  }, []);
+  }, [appState.favourites, appState.url, id]);
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source();
@@ -62,7 +62,7 @@ const ViewSingle = () => {
     return () => {
       ourRequest.cancel();
     };
-  }, [appState.favourites]);
+  }, [appState.favourites, post.name]);
 
   const addToFavouritesHandler = () => {
     appDispatch({

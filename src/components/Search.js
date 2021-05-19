@@ -22,7 +22,7 @@ const Search = props => {
       type: 'updateSearchResults',
       value: results
     });
-  }, [appState.searchTerm, appState.allData]);
+  }, [appDispatch, appState.searchTerm, appState.allData, appState.results]);
 
   return (
     <div className="search container">
