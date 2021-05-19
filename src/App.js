@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useImmerReducer } from 'use-immer';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Axios from 'axios';
 
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 
-import Search from './components/Search';
-import Pagination from './components/Pagination';
+import Home from './pages/Home';
 
 import './App.css';
 
@@ -66,13 +66,13 @@ function App() {
     <div className="app">
       <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
-          <Search />
-          <ul>
-            {state.searchResults.map(item => (
-              <li key={item.name}>{item.name}</li>
-            ))}
-          </ul>
-          <Pagination />
+          <BrowserRouter>
+            <Switch>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+            </Switch>
+          </BrowserRouter>
         </DispatchContext.Provider>
       </StateContext.Provider>
     </div>
