@@ -5,6 +5,7 @@ import Axios from 'axios';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 
+import Search from './components/Search';
 import Pagination from './components/Pagination';
 
 import './App.css';
@@ -15,7 +16,9 @@ function App() {
     allData: {},
     results: [],
     prevURL: null,
-    nextURL: null
+    nextURL: null,
+    searchTerm: '',
+    searchResults: []
   };
 
   function ourReducer(draft, action) {
@@ -25,6 +28,12 @@ function App() {
         draft.results = action.data.results;
         draft.prevURL = action.data.previous;
         draft.nextURL = action.data.next;
+        return;
+      case 'updateSearchTerm':
+        draft.searchTerm = action.value;
+        return;
+      case 'updateSearchResults':
+        draft.searchResults = action.value;
         return;
       default:
         return state;
@@ -57,9 +66,10 @@ function App() {
     <div className="app">
       <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
+          <Search />
           <ul>
-            {state.results.map(item => (
-              <li>{item.name}</li>
+            {state.searchResults.map(item => (
+              <li key={item.name}>{item.name}</li>
             ))}
           </ul>
           <Pagination />
