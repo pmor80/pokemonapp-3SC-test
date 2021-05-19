@@ -1,38 +1,198 @@
-.App {
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #ffcb05;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.wrapper {
+  border: 1px solid red;
+}
+
+.wrapper.header {
+  background: #003a70;
+}
+
+.wrapper.header a {
+  color: #fff;
+  padding: 0 20px 0 0;
+}
+
+.container {
+  border: 1px solid red;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search label {
+  display: none;
+}
+
+.search input {
+  padding: 15px;
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid #efefef;
+  transition: all 0.2s ease-in-out;
+}
+
+.search input:focus {
+  border: 2px solid #3498db;
+  outline: none;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-height: 480px;
+}
+
+.list a {
+  color: #003a70;
+}
+
+.pagination {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.single .name {
+  text-transform: uppercase;
+}
+
+.single .image-wrapper {
+  height: 96px;
+}
+
+.single .pagination {
+  padding: 20px 0;
+}
+
+.btn {
+  border-radius: 7px;
+  color: #fff;
+  background: #3cb0fd;
+  border: none;
+  padding: 15px 25px;
+  text-decoration: none;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  background: #eee;
+  color: #999;
+  cursor: default;
+}
+
+.btn:hover {
+  background: #003a70;
+  color: #fff;
+  text-decoration: none;
+}
+
+.stats {
+  width: 100%;
+}
+
+.stats thead {
+  font-weight: bold;
+}
+
+.stats tbody td {
+  padding: 3px;
+}
+
+.stats tbody tr:nth-child(odd) td {
+  background-color: #eee;
+}
+
+/* Dots Loading Animation */
+.dots-loading {
+  margin: 0 auto;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dots-loading::before,
+.dots-loading::after {
+  content: ' ';
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.dots-loading div,
+.dots-loading::before,
+.dots-loading::after {
+  margin: 35px 5px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #c4c4c4;
+  opacity: 0;
+}
+
+.dots-loading::before {
+  -moz-animation: opacitychange 1s ease-in-out infinite;
+  -webkit-animation: opacitychange 1s ease-in-out infinite;
+  -o-animation: opacitychange 1s ease-in-out infinite;
+  animation: opacitychange 1s ease-in-out infinite;
+}
+
+.dots-loading div {
+  -moz-animation: opacitychange 1s ease-in-out 0.33s infinite;
+  -webkit-animation: opacitychange 1s ease-in-out 0.33s infinite;
+  -o-animation: opacitychange 1s ease-in-out 0.33s infinite;
+  animation: opacitychange 1s ease-in-out 0.33s infinite;
+  -webkit-animation-fill-mode: infinite;
+  animation-fill-mode: infinite;
+}
+
+.dots-loading::after {
+  -moz-animation: opacitychange 1s ease-in-out 0.66s infinite;
+  -webkit-animation: opacitychange 1s ease-in-out 0.66s infinite;
+  -o-animation: opacitychange 1s ease-in-out 0.66s infinite;
+  animation: opacitychange 1s ease-in-out 0.66s infinite;
+  -webkit-animation-fill-mode: infinite;
+  animation-fill-mode: infinite;
+}
+
+@keyframes opacitychange {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 1;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@-webkit-keyframes opacitychange {
+  0%,
+  100% {
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  60% {
+    opacity: 1;
   }
 }
