@@ -6,16 +6,28 @@ import Axios from 'axios';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 
+// My pages
 import Home from './pages/Home';
+import Favourites from './pages/Favourites';
 import ViewSingle from './pages/ViewSingle';
+
+// My componens
+import Header from './components/Header';
 
 import './App.css';
 
 function App() {
+  const initialStateFavourites = Boolean(
+    localStorage.getItem('favouritePokemons')
+  )
+    ? JSON.parse(localStorage.getItem('favouritePokemons'))
+    : [];
+
   const initialState = {
     url: 'https://pokeapi.co/api/v2/pokemon/',
     allData: {},
     results: [],
+    favourites: initialStateFavourites,
     prevURL: null,
     nextURL: null,
     searchTerm: '',
@@ -36,6 +48,18 @@ function App() {
       case 'updateSearchResults':
         draft.searchResults = action.value;
         return;
+      case 'addToFavourites':
+        return {
+          ...draft,
+          favourites: [...draft.favourites, action.data]
+        };
+      case 'removeFromFavourites':
+        return {
+          ...draft,
+          favourites: [
+            ...draft.favourites.filter(item => item.name !== action.name)
+          ]
+        };
       default:
         return state;
     }
@@ -63,14 +87,23 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    localStorage.removeItem('favoritePokemons');
+    localStorage.setItem('favoritePokemons', JSON.stringify(state.favorites));
+  }, [state.favorites]);
+
   return (
     <div className="app">
       <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
           <BrowserRouter>
+            <Header />
             <Switch>
               <Route path="/" exact>
                 <Home />
+              </Route>
+              <Route path="/favourites" exact>
+                <Favourites />
               </Route>
               <Route path="/pokemon/:id" exact>
                 <ViewSingle />
