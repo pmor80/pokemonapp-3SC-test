@@ -5,6 +5,8 @@ import Axios from 'axios';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 
+import Pagination from './components/Pagination';
+
 import './App.css';
 
 function App() {
@@ -60,6 +62,7 @@ function App() {
               <li>{item.name}</li>
             ))}
           </ul>
+          <Pagination />
         </DispatchContext.Provider>
       </StateContext.Provider>
     </div>
