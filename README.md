@@ -23,3 +23,10 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Functionality List
+
+View of Pokemons list with Pagination
+Pokemon Details Page with Statistics
+Pokemons Comparison Functionality
+Favourite Pokemons List with Local Storage
