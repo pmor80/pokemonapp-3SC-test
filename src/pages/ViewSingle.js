@@ -17,6 +17,7 @@ const ViewSingle = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isFavourite, setIsFavourite] = useState();
+  const [isCompared, setIsCompared] = useState();
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source();
@@ -25,6 +26,7 @@ const ViewSingle = () => {
         const response = await Axios.get(`${appState.url}${id}/`);
         setPost(response.data);
         setIsLoading(false);
+        // set local state to check if element if favourite
         if (
           appState.favourites.filter(item => item.name === response.data.name)
             .length > 0
@@ -33,6 +35,16 @@ const ViewSingle = () => {
         } else {
           setIsFavourite(false);
         }
+        // set local state to check if element is in compared list
+        if (
+          appState.compare.filter(item => item.name === response.data.name)
+            .length > 0
+        ) {
+          setIsCompared(true);
+        } else {
+          setIsCompared(false);
+        }
+
         console.log('fetching OK');
       } catch (e) {
         console.log('There was a problem fetching data.');
@@ -42,7 +54,7 @@ const ViewSingle = () => {
     return () => {
       ourRequest.cancel();
     };
-  }, [appState.favourites, appState.url, id]);
+  }, [appState.favourites, appState.compare, appState.url, id]);
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source();
@@ -64,6 +76,24 @@ const ViewSingle = () => {
     };
   }, [appState.favourites, post.name]);
 
+  useEffect(() => {
+    const ourRequest = Axios.CancelToken.source();
+
+    const isComparedHandler = () => {
+      if (appState.compare.filter(item => item.name === post.name).length > 0) {
+        setIsCompared(true);
+      } else {
+        setIsCompared(false);
+      }
+    };
+
+    isComparedHandler();
+
+    return () => {
+      ourRequest.cancel();
+    };
+  }, [appState.compare, post.name]);
+
   const addToFavouritesHandler = () => {
     appDispatch({
       type: 'addToFavourites',
@@ -78,11 +108,39 @@ const ViewSingle = () => {
     });
   };
 
+  const addToCompareHandler = () => {
+    appDispatch({
+      type: 'addToCompare',
+      data: { name: post.name, stats: post.stats }
+    });
+  };
+
+  const removeFromCompareHandler = () => {
+    appDispatch({
+      type: 'removeFromCompare',
+      name: post.name
+    });
+  };
+
   if (isLoading) return <LoadingDotsIcon />;
 
   return (
     <div className="container single">
+      <div className="pagination">
+        <Button
+          onButtonClickHandler={addToFavouritesHandler}
+          disabledState={isFavourite}>
+          Add to Favourites
+        </Button>
+
+        <Button
+          onButtonClickHandler={removeFromFavouritesHandler}
+          disabledState={!isFavourite}>
+          Remove from Favourites
+        </Button>
+      </div>
       <h2 className="name">{post.name}</h2>
+
       <div className="image-wrapper">
         <img src={post.sprites.front_default} alt="" />
       </div>
@@ -106,19 +164,37 @@ const ViewSingle = () => {
         </tbody>
       </table>
 
-      <div className="pagination">
-        <Button
-          onButtonClickHandler={addToFavouritesHandler}
-          disabledState={isFavourite}>
-          Add to Favourites
-        </Button>
+      {!isCompared && appState.compare.length < 2 && (
+        <div className="pagination">
+          <Button
+            onButtonClickHandler={addToCompareHandler}
+            disabledState={isCompared}>
+            Compare {post.name}
+          </Button>
 
-        <Button
-          onButtonClickHandler={removeFromFavouritesHandler}
-          disabledState={!isFavourite}>
-          Remove from Favourites
-        </Button>
-      </div>
+          <Button
+            onButtonClickHandler={removeFromCompareHandler}
+            disabledState={!isCompared}>
+            Stop Comparing
+          </Button>
+        </div>
+      )}
+
+      {isCompared && (
+        <div className="pagination">
+          <Button
+            onButtonClickHandler={addToCompareHandler}
+            disabledState={isCompared}>
+            Compare {post.name}
+          </Button>
+
+          <Button
+            onButtonClickHandler={removeFromCompareHandler}
+            disabledState={!isCompared}>
+            Stop Comparing
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

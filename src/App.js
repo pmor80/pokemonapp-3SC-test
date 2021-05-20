@@ -10,6 +10,7 @@ import DispatchContext from './DispatchContext';
 import Home from './pages/Home';
 import Favourites from './pages/Favourites';
 import ViewSingle from './pages/ViewSingle';
+import Compare from './pages/Compare';
 
 // My componens
 import Header from './components/Header';
@@ -28,6 +29,7 @@ function App() {
     allData: {},
     results: [],
     favourites: initialStateFavourites,
+    compare: [],
     prevURL: null,
     nextURL: null,
     searchTerm: '',
@@ -59,6 +61,16 @@ function App() {
           favourites: [
             ...draft.favourites.filter(item => item.name !== action.name)
           ]
+        };
+      case 'addToCompare':
+        return {
+          ...draft,
+          compare: [...draft.compare, action.data]
+        };
+      case 'removeFromCompare':
+        return {
+          ...draft,
+          compare: [...draft.compare.filter(item => item.name !== action.name)]
         };
       default:
         return state;
@@ -107,6 +119,9 @@ function App() {
               </Route>
               <Route path="/pokemon/:id" exact>
                 <ViewSingle />
+              </Route>
+              <Route path="/compare" exact>
+                <Compare />
               </Route>
             </Switch>
           </BrowserRouter>

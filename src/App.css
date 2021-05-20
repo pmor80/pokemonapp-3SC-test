@@ -30,6 +30,10 @@ a {
   padding: 0 20px 0 0;
 }
 
+.wrapper.header a.selected {
+  color: yellow;
+}
+
 .container {
   border: 1px solid red;
   max-width: 480px;
@@ -88,7 +92,7 @@ a {
   color: #fff;
   background: #3cb0fd;
   border: none;
-  padding: 15px 25px;
+  padding: 10px 20px;
   text-decoration: none;
   transition: all 0.25s ease-in-out;
   cursor: pointer;
