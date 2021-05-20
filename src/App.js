@@ -100,9 +100,9 @@ function App() {
   }, [dispatch, state.url]);
 
   useEffect(() => {
-    localStorage.removeItem('favoritePokemons');
-    localStorage.setItem('favoritePokemons', JSON.stringify(state.favorites));
-  }, [state.favorites]);
+    localStorage.removeItem('favouritePokemons');
+    localStorage.setItem('favouritePokemons', JSON.stringify(state.favourites));
+  }, [state.favourites]);
 
   return (
     <div className="app">
